@@ -14,26 +14,32 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $query = "UPDATE libri 
                   SET titolo = :titolo, autore = :autore, anno_pubblicazione = :anno_pubblicazione, genere = :genere 
                   WHERE id = :id";
+                   $stmt = $pdo->prepare($query);
+                   $stmt->execute([
+                       'titolo' => $titolo,
+                       'autore' => $autore,
+                       'anno_pubblicazione' => $anno,
+                       'genere' => $genere,
+                   ]);
     } else {
         $query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, genere) 
                   VALUES (:titolo, :autore, :anno_pubblicazione, :genere)";
+                   $stmt = $pdo->prepare($query);
+                   $stmt->execute([
+                       'titolo' => $titolo,
+                       'autore' => $autore,
+                       'anno_pubblicazione' => $anno,
+                       'genere' => $genere,
+                   ]);
     }
-    $stmt = $pdo->prepare($query);
-    $stmt->execute([
-        'titolo' => $titolo,
-        'autore' => $autore,
-        'anno_pubblicazione' => $anno,
-        'genere' => $genere,
-        'id' => $book_id,
-    ]);
-
-    header("Location: /progetto.settimanale.be/");
+    
+    header("Location: index.php");
 }
 ?>
 
 <div class="row">
     <div class="col-md-6">
-        <div class="card">
+        <div class="card text-center bg-primary text-white rounded">
             <div class="card-body">
                 <h3 class="card-title mb-3"><?= isset($_REQUEST["id"]) ? "Modifica libro" : "Aggiungi libro" ?></h3>
                 <form action="" method="POST" novalidate>
@@ -50,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="anno" class="form-label">Anno di pubblicazione</label>
                         <input type="number" class="form-control" name="anno_pubblicazione" id="anno" required>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3" >
                         <label for="genere" class="form-label">Genere</label>
                         <input type="text" class="form-control" name="genere" id="genere" required>
                     </div>

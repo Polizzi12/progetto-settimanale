@@ -10,7 +10,7 @@ include __DIR__ . "/start.php";
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Library</title>
 </head>
-<body>
+<body style="background-color:aliceblue;"> 
 
 <?php include __DIR__ . '/db.php';
 $search = isset($_GET['search']) ? $_GET['search'] : '';
@@ -20,24 +20,24 @@ $stmt->execute([
     "%$search%"
 ]);
 ?>
-<div class="container">
-        <h1 class="text-center">The Library</h1>
+<div class="container" style="background-color:aliceblue; border:0.5px solid blue; border-radius:20px;">
+        <h1 class="text-center text-primary">The Library</h1>
 
         <form class="row g-3">
             <div class="col">
-                <input type="text" name="search" class="form-control" placeholder="Cerca un film">
+                <input type="text" name="search" class="form-control" placeholder="Cerca un film" style="color:blue; border:0.5px solid blue; ::placeholder { color: blue; }">
             </div>
             <div class="col-auto">
                 <button type="submit" class="btn btn-primary mb-3">Cerca</button>
             </div>
         </form>
         <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) { ?>
-            <div class="card mb-4">
+            <div class="card mb-4 mx-4" style="background-color:aliceblue; border:0.5px solid blue;">
                 <div class="card-body">
-                    <h5 class="card-title"><?= $row["titolo"] ?></h5>
-                    <p class="card-text"><?= $row["autore"] ?></p>
-                    <p class="card-text">Anno: <?= $row["anno_pubblicazione"] ?></p>
-                    <p class="card-text">Genere: <?= $row["genere"] ?></p>
+                    <h1 class="card-title text-primary "><?= $row["titolo"] ?></h1>
+                    <p class="card-text bg-primary text-white rounded"  style= "width: 200px; height:50px; font-size:20px; padding-top:8px; padding-left:5px; " >Autore: <?= $row["autore"] ?></p>
+                    <p class="card-text bg-primary text-white rounded" style="width: 200px; height:50px; font-size:20px; padding-top:8px; padding-left:5px;">Anno: <?= $row["anno_pubblicazione"] ?></p>
+                    <p class="card-text bg-primary text-white rounded" style="width: 200px; height:50px; font-size:20px; padding-top:8px; padding-left:5px;">Genere: <?= $row["genere"] ?></p>
                 </div>
             </div>
         <?php } ?>
